@@ -343,7 +343,7 @@ if st.session_state.accepted:
     # Confirm Button
     # -----------------------
     if st.button(
-        "😊 Confirm Our Date ❤️",
+        "😊 Confirm ?",
         use_container_width=True
     ):
 
@@ -355,7 +355,7 @@ if st.session_state.accepted:
             )
 
             st.success(
-                "❤️ Our date is officially confirmed!"
+                "❤️Now it's officially confirmed!"
             )
 
         except Exception as e:
