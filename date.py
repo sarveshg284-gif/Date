@@ -111,49 +111,167 @@ if st.button(
     st.balloons()
 
 # -----------------------
-# Android Friendly NO Button
+# Moving NO Button (Android Touch Friendly)
 # -----------------------
 
-no_messages = [
+import streamlit.components.v1 as components
 
-    "🙈 No",
 
-    "🥺 Are you sure?",
+components.html(
+"""
+<!DOCTYPE html>
 
-    "😔 Think once again...",
+<html>
 
-    "💔 Don't say no yet...",
+<head>
 
-    "🥹 Give me one chance?",
+<style>
 
-    "❤️ Please reconsider...",
+body{
+    margin:0;
+    height:150px;
+    overflow:hidden;
+    background:transparent;
+}
 
-    "🌹 I promise it'll be special...",
 
-    "😊 I'm still hoping...",
+#noBtn{
 
-    "💖 Last chance?",
+position:absolute;
 
-    "🥲 Okay... I respect your choice."
-]
+top:50px;
+left:50%;
 
-if not st.session_state.accepted:
+transform:translateX(-50%);
 
-    if st.button(
-        no_messages[
-            min(
-                st.session_state.no_count,
-                len(no_messages)-1
-            )
-        ],
-        use_container_width=True
-    ):
+background:#ff4da6;
 
-        if st.session_state.no_count < len(no_messages)-1:
+color:white;
 
-            st.session_state.no_count += 1
+border:none;
 
-        st.rerun()
+padding:15px 35px;
+
+border-radius:30px;
+
+font-size:20px;
+
+font-weight:bold;
+
+box-shadow:0px 5px 15px rgba(255,0,100,0.3);
+
+transition:0.25s;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<button id="noBtn">
+🙈 NO
+</button>
+
+
+
+<script>
+
+
+const btn=document.getElementById("noBtn");
+
+
+const messages=[
+
+"🙈 NO",
+
+"🥺 Are you sure?",
+
+"😔 Think again",
+
+"💔 Don't leave me",
+
+"🥹 One chance?",
+
+"❤️ Please",
+
+"🌹 I'll make it special",
+
+"😜 Catch me",
+
+"😂 Too slow",
+
+"💖 Last chance"
+
+];
+
+
+
+let count=0;
+
+
+
+function moveButton(){
+
+
+let x=Math.random()*220;
+
+let y=Math.random()*70;
+
+
+btn.style.left=x+"px";
+
+btn.style.top=y+"px";
+
+
+btn.innerHTML=
+messages[Math.min(count,messages.length-1)];
+
+
+count++;
+
+
+}
+
+
+
+btn.addEventListener(
+"touchstart",
+function(e){
+
+e.preventDefault();
+
+moveButton();
+
+}
+);
+
+
+
+btn.addEventListener(
+"click",
+function(){
+
+moveButton();
+
+}
+);
+
+
+
+</script>
+
+
+</body>
+
+</html>
+""",
+height=160,
+)
 
 # -----------------------
 # After YES
