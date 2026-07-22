@@ -80,7 +80,7 @@ if "no_count" not in st.session_state:
 st.markdown(
 """
 <h1 style="text-align:center;color:#ff4b4b;">
-❤️ A Special Question ❤️
+❤️A Special Question❤️
 </h1>
 """,
 unsafe_allow_html=True
