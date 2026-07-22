@@ -1,22 +1,45 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import requests
 
-
+# -----------------------
+# Page Config
+# -----------------------
 st.set_page_config(
     page_title="Date Proposal ❤️",
     page_icon="❤️",
     layout="centered"
 )
 
+# -----------------------
+# Android Friendly CSS
+# -----------------------
+st.markdown("""
+<style>
+
+.block-container{
+    max-width:500px;
+    padding-top:2rem;
+}
+
+div.stButton > button{
+    width:100%;
+    height:60px;
+    font-size:22px;
+    font-weight:bold;
+    border-radius:15px;
+    border:none;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 # -----------------------
 # Telegram Function
 # -----------------------
-def send_telegram(date, time, place):
+BOT_TOKEN = "YOUR_NEW_BOT_TOKEN"
+CHAT_ID = "YOUR_CHAT_ID"
 
-    BOT_TOKEN = "8954289020:AAHZaBvcwLhPruZbHO7fH7VZwD02ufQKvAM"
-    CHAT_ID = "6746692749"
+def send_telegram(date, time, place):
 
     message = f"""
 ❤️ New Date Confirmation ❤️
@@ -34,14 +57,13 @@ Someone accepted your proposal! 🥳
 
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
-    data = {
-        "chat_id": CHAT_ID,
-        "text": message
-    }
-
-    requests.post(url, data=data)
-
-
+    requests.post(
+        url,
+        data={
+            "chat_id": CHAT_ID,
+            "text": message
+        }
+    )
 
 # -----------------------
 # Session State
@@ -49,159 +71,98 @@ Someone accepted your proposal! 🥳
 if "accepted" not in st.session_state:
     st.session_state.accepted = False
 
-
+if "no_count" not in st.session_state:
+    st.session_state.no_count = 0
 
 # -----------------------
 # Title
 # -----------------------
 st.markdown(
-    """
-    <h1 style="text-align:center;color:#ff4b4b;">
-        ❤️ A Special Question ❤️
-    </h1>
-    """,
-    unsafe_allow_html=True,
+"""
+<h1 style="text-align:center;color:#ff4b4b;">
+❤️ A Special Question ❤️
+</h1>
+""",
+unsafe_allow_html=True
 )
-
 
 st.markdown(
-    """
-    <h3 style="text-align:center;">
-        Every moment with you feels special.😊
-    </h3>
+"""
+<h3 style="text-align:center;">
+Every moment with you feels special. 😊
+</h3>
 
-    <h2 style="text-align:center;color:#ff1493;">
-        what if we went out🙂🫴 ? 
-    </h2>
-    """,
-    unsafe_allow_html=True,
+<h2 style="text-align:center;color:#ff1493;">
+What if we went out? 🙂🫴
+</h2>
+""",
+unsafe_allow_html=True
 )
-
-
 
 # -----------------------
 # YES Button
 # -----------------------
-if st.button("YES ❤️"):
+if st.button(
+    "❤️ YES ❤️",
+    use_container_width=True
+):
 
     st.session_state.accepted = True
     st.balloons()
 
-
-
 # -----------------------
-# NO Button (Runs Away)
+# Android Friendly NO Button
 # -----------------------
-components.html(
-"""
-<!DOCTYPE html>
-<html>
 
-<head>
+no_messages = [
 
-<style>
+    "🙈 No",
 
-body{
-    margin:0;
-    overflow:hidden;
-    background:transparent;
-}
+    "🥺 Are you sure?",
 
+    "😔 Think once again...",
 
-#noBtn{
+    "💔 Don't say no yet...",
 
-position:absolute;
+    "🥹 Give me one chance?",
 
-top:60px;
-left:55%;
+    "❤️ Please reconsider...",
 
-background:#ff4da6;
+    "🌹 I promise it'll be special...",
 
-color:white;
+    "😊 I'm still hoping...",
 
-border:none;
+    "💖 Last chance?",
 
-padding:14px 28px;
+    "🥲 Okay... I respect your choice."
+]
 
-border-radius:30px;
+if not st.session_state.accepted:
 
-font-size:18px;
+    if st.button(
+        no_messages[
+            min(
+                st.session_state.no_count,
+                len(no_messages)-1
+            )
+        ],
+        use_container_width=True
+    ):
 
-cursor:pointer;
+        if st.session_state.no_count < len(no_messages)-1:
 
-transition:0.1s;
+            st.session_state.no_count += 1
 
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<button id="noBtn">
-NO 😜
-</button>
-
-
-
-<script>
-
-const btn=document.getElementById("noBtn");
-
-
-const texts=[
-"No 😜",
-"Catch Me 😂",
-"Too Slow 😆",
-"Try Again 😎",
-"Impossible 🤣",
-"Almost 😜"
-];
-
-
-
-btn.addEventListener(
-"mouseover",
-()=>{
-
-
-const maxX=window.innerWidth-150;
-
-const maxY=window.innerHeight-100;
-
-
-btn.style.left=Math.random()*maxX+"px";
-
-btn.style.top=Math.random()*maxY+"px";
-
-
-btn.innerHTML=
-texts[Math.floor(Math.random()*texts.length)];
-
-
-});
-
-
-</script>
-
-
-</body>
-
-</html>
-""",
-height=180,
-)
-
-
+        st.rerun()
 
 # -----------------------
 # After YES
 # -----------------------
-if st.session_state.accepted:
+# -----------------------
+# After YES
+# -----------------------
 
+if st.session_state.accepted:
 
     st.markdown(
         """
@@ -227,57 +188,97 @@ if st.session_state.accepted:
         unsafe_allow_html=True,
     )
 
+    st.write("")
 
+    # -----------------------
+    # Date
+    # -----------------------
+    date = st.date_input(
+        "📅 Select a Date"
+    )
 
-    date = st.date_input("📅 Select a date")
+    # -----------------------
+    # Time
+    # -----------------------
+    time = st.time_input(
+        "⏰ Select Time"
+    )
 
-
-    time = st.time_input("⏰ Select a time")
-
-
+    # -----------------------
+    # Place
+    # -----------------------
     place = st.selectbox(
         "📍 Where should we go?",
         [
-            "Iskon Temple (Kharghar)",
-            "Siddhivinayak MAndir (Dadar)",
-            "Ganpati Mandir (Titwala)",
-            "Manas Mandir (Shahapur)",
-            "Iskon Temple (Thane)",
-            "Birla Mandir (Shahad)",
-        ],
+            "🌸 Iskcon Temple (Kharghar)",
+            "🙏 Siddhivinayak Mandir (Dadar)",
+            "🛕 Ganpati Mandir (Titwala)",
+            "🌿 Manas Mandir (Shahapur)",
+            "💖 Iskcon Temple (Thane)",
+            "✨ Birla Mandir (Shahad)"
+        ]
     )
 
+    st.write("")
 
+    # -----------------------
+    # Confirm Button
+    # -----------------------
+    if st.button(
+        "😊 Confirm Our Date ❤️",
+        use_container_width=True
+    ):
 
-    if st.button("😊Confirm !!"):
+        try:
+            send_telegram(
+                date,
+                time,
+                place
+            )
 
+            st.success(
+                "❤️ Our date is officially confirmed!"
+            )
 
-        send_telegram(
-            date,
-            time,
-            place
-        )
-
-
-        st.success(
-            "Now It's officially confirm😊🤝"
-        )
-
+        except Exception as e:
+            st.error(
+                f"Telegram Error: {e}"
+            )
 
         st.markdown(
             f"""
-### see you soon☺️🙌
+## 💌 See You Soon 😊
 
-**📅 Date:** {date}
+### 📅 Date
+**{date}**
 
-**⏰ Time:** {time}
+### ⏰ Time
+**{time}**
 
-**📍 Place:** {place}
+### 📍 Place
+**{place}**
 
+---
 
+❤️ Can't wait to meet you!
 
+Thank you for saying YES. 🥹🌹
 """
         )
 
-
+        st.balloons()
         st.snow()
+
+        st.markdown(
+            """
+---
+<center>
+
+<h3 style="color:#ff1493;">
+🌸 Have a Beautiful Day 🌸
+</h3>
+
+</center>
+""",
+            unsafe_allow_html=True,
+        )
