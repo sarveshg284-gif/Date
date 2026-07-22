@@ -193,19 +193,19 @@ const messages=[
 
 "😔 Think again",
 
-"💔 Don't leave me",
+"💔 Don't say no yet...",
 
 "🥹 One chance?",
 
-"❤️ Please",
+"❤️ Please reconsider",
 
 "🌹 I'll make it special",
 
-"😜 Catch me",
+"😊 I'm still hoping...",
 
-"😂 Too slow",
+"💖 Last chance",
 
-"💖 Last chance"
+"🥲 Okay... I respect your choice."
 
 ];
 
