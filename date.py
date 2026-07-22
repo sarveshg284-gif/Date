@@ -323,19 +323,32 @@ if st.session_state.accepted:
     )
 
     # -----------------------
-    # Place
-    # -----------------------
-    place = st.selectbox(
-        "📍 Where should we go?",
-        [
-            "🌸 Iskcon Temple (Kharghar)",
-            "🙏 Siddhivinayak Mandir (Dadar)",
-            "🛕 Ganpati Mandir (Titwala)",
-            "🌿 Manas Mandir (Shahapur)",
-            "💖 Iskcon Temple (Thane)",
-            "✨ Birla Mandir (Shahad)"
-        ]
+# Place Selection
+# -----------------------
+
+place_option = st.selectbox(
+    "📍 Where should we go?",
+    [
+        "🌸 Iskcon Temple (Kharghar)",
+        "🙏 Siddhivinayak Mandir (Dadar)",
+        "🛕 Ganpati Mandir (Titwala)",
+        "🌿 Manas Mandir (Shahapur)",
+        "💖 Iskcon Temple (Thane)",
+        "✨ Birla Mandir (Shahad)",
+        "📍 Other"
+    ]
+)
+
+
+if place_option == "📍 Other":
+
+    place = st.text_input(
+        "✍️ Enter your place"
     )
+
+else:
+
+    place = place_option
 
     st.write("")
 
