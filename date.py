@@ -260,9 +260,8 @@ if st.session_state.accepted:
 
 ---
 
-❤️ Can't wait to meet you!
 
-Thank you for saying YES. 🥹🌹
+Thank you for saying YES. 🥹🌸
 """
         )
 
@@ -273,10 +272,6 @@ Thank you for saying YES. 🥹🌹
             """
 ---
 <center>
-
-<h3 style="color:#ff1493;">
-🌸 Have a Beautiful Day 🌸
-</h3>
 
 </center>
 """,
