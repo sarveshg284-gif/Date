@@ -5,7 +5,7 @@ import requests
 # Page Config
 # -----------------------
 st.set_page_config(
-    page_title="Date Proposal ❤️",
+    page_title="Went Out Together",
     page_icon="❤️",
     layout="centered"
 )
