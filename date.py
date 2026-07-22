@@ -67,11 +67,11 @@ st.markdown(
 st.markdown(
     """
     <h3 style="text-align:center;">
-        Every moment with you feels special. 😊
+        Every moment with you feels special.😊
     </h3>
 
     <h2 style="text-align:center;color:#ff1493;">
-        🌹 Will you go on a date with me? 🌹
+        what if we went out🙂🫴 ? 
     </h2>
     """,
     unsafe_allow_html=True,
@@ -238,19 +238,18 @@ if st.session_state.accepted:
     place = st.selectbox(
         "📍 Where should we go?",
         [
-            "☕ Coffee Shop",
-            "🍕 Pizza Date",
-            "🎬 Movie",
-            "🍽️ Dinner",
-            "🌳 Park Walk",
-            "🍦 Ice Cream",
-            "🏖️ Beach",
+            "Iskon Temple (Kharghar)",
+            "Siddhivinayak MAndir (Dadar)",
+            "Ganpati Mandir (Titwala)",
+            "Manas Mandir (Shahapur)",
+            "Iskon Temple (Thane)",
+            "Birla Mandir (Shahad)",
         ],
     )
 
 
 
-    if st.button("💖 Confirm Date"):
+    if st.button("😊Confirm !!"):
 
 
         send_telegram(
@@ -261,13 +260,13 @@ if st.session_state.accepted:
 
 
         st.success(
-            "Our date is officially fixed! ❤️"
+            "Now It's officially confirm😊🤝"
         )
 
 
         st.markdown(
             f"""
-### 💌 Date Confirmed
+### see you soon☺️🙌
 
 **📅 Date:** {date}
 
@@ -276,7 +275,7 @@ if st.session_state.accepted:
 **📍 Place:** {place}
 
 
-Can't wait to see you! 🥰🌹
+
 """
         )
 
