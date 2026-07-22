@@ -1,5 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
+import requests
+
 
 st.set_page_config(
     page_title="Date Proposal ❤️",
@@ -7,8 +9,47 @@ st.set_page_config(
     layout="centered"
 )
 
+
+# -----------------------
+# Telegram Function
+# -----------------------
+def send_telegram(date, time, place):
+
+    BOT_TOKEN = "8954289020:AAHZaBvcwLhPruZbHO7fH7VZwD02ufQKvAM"
+    CHAT_ID = "6746692749"
+
+    message = f"""
+❤️ New Date Confirmation ❤️
+
+Someone accepted your proposal! 🥳
+
+📅 Date: {date}
+
+⏰ Time: {time}
+
+📍 Place: {place}
+
+💖 Congratulations!
+"""
+
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+
+    data = {
+        "chat_id": CHAT_ID,
+        "text": message
+    }
+
+    requests.post(url, data=data)
+
+
+
+# -----------------------
+# Session State
+# -----------------------
 if "accepted" not in st.session_state:
     st.session_state.accepted = False
+
+
 
 # -----------------------
 # Title
@@ -21,6 +62,7 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
 
 st.markdown(
     """
@@ -35,20 +77,26 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+
+
 # -----------------------
 # YES Button
 # -----------------------
 if st.button("YES ❤️"):
+
     st.session_state.accepted = True
     st.balloons()
+
+
 
 # -----------------------
 # NO Button (Runs Away)
 # -----------------------
 components.html(
-    """
+"""
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <style>
@@ -58,6 +106,7 @@ body{
     overflow:hidden;
     background:transparent;
 }
+
 
 #noBtn{
 
@@ -88,13 +137,20 @@ transition:0.1s;
 
 </head>
 
+
 <body>
 
-<button id="noBtn">NO 😜</button>
+
+<button id="noBtn">
+NO 😜
+</button>
+
+
 
 <script>
 
 const btn=document.getElementById("noBtn");
+
 
 const texts=[
 "No 😜",
@@ -105,30 +161,47 @@ const texts=[
 "Almost 😜"
 ];
 
-btn.addEventListener("mouseover",()=>{
+
+
+btn.addEventListener(
+"mouseover",
+()=>{
+
 
 const maxX=window.innerWidth-150;
+
 const maxY=window.innerHeight-100;
 
+
 btn.style.left=Math.random()*maxX+"px";
+
 btn.style.top=Math.random()*maxY+"px";
 
-btn.innerHTML=texts[Math.floor(Math.random()*texts.length)];
+
+btn.innerHTML=
+texts[Math.floor(Math.random()*texts.length)];
+
 
 });
 
+
 </script>
 
+
 </body>
+
 </html>
 """,
-    height=180,
+height=180,
 )
+
+
 
 # -----------------------
 # After YES
 # -----------------------
 if st.session_state.accepted:
+
 
     st.markdown(
         """
@@ -154,9 +227,13 @@ if st.session_state.accepted:
         unsafe_allow_html=True,
     )
 
+
+
     date = st.date_input("📅 Select a date")
 
+
     time = st.time_input("⏰ Select a time")
+
 
     place = st.selectbox(
         "📍 Where should we go?",
@@ -171,9 +248,22 @@ if st.session_state.accepted:
         ],
     )
 
+
+
     if st.button("💖 Confirm Date"):
 
-        st.success("Our date is officially fixed! ❤️")
+
+        send_telegram(
+            date,
+            time,
+            place
+        )
+
+
+        st.success(
+            "Our date is officially fixed! ❤️"
+        )
+
 
         st.markdown(
             f"""
@@ -185,8 +275,10 @@ if st.session_state.accepted:
 
 **📍 Place:** {place}
 
+
 Can't wait to see you! 🥰🌹
 """
         )
+
 
         st.snow()
