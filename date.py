@@ -36,8 +36,8 @@ div.stButton > button{
 # -----------------------
 # Telegram Function
 # -----------------------
-BOT_TOKEN = "YOUR_NEW_BOT_TOKEN"
-CHAT_ID = "YOUR_CHAT_ID"
+BOT_TOKEN = "8954289020:AAHZaBvcwLhPruZbHO7fH7VZwD02ufQKvAM"
+CHAT_ID = "6746692749"
 
 def send_telegram(date, time, place):
 
